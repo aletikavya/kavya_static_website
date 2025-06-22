@@ -14,6 +14,20 @@ resource "aws_s3_bucket" "static_website" {
     index_document = "index.html"
     error_document = "index.html"
   }
+
+  tags = {
+    Project = "StaticWebsiteHosting"
+    Owner   = "Kavya"
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "allow_public_access" {
+  bucket = aws_s3_bucket.static_website.id
+
+  block_public_acls   = false
+  block_public_policy = false
+  ignore_public_acls  = false
+  restrict_public_buckets = false
 }
 
 resource "aws_s3_bucket_policy" "public_access" {
