@@ -5,7 +5,7 @@ provider "aws" {
 resource "aws_s3_bucket" "static_website" {
   bucket = "kavya-static-website-9908"
 
-  object_ownership = "BucketOwnerEnforced"
+  # object_ownership = "BucketOwnerEnforced"
 
   tags = {
     Project = "StaticWebsiteHosting"
