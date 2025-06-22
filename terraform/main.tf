@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "static_website" {
-  bucket = "kavya_static_website9908"
+  bucket = "kavya-static-website9908"
   acl    = "public-read"
 
   versioning {
