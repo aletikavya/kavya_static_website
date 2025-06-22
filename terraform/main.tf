@@ -3,11 +3,13 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "static_website" {
-  bucket = "kavya-static-website9908"
-  acl    = "public-read"
+  bucket = "kavya-static-website-9908"
 
-  versioning {
-    enabled = true
+  object_ownership = "BucketOwnerEnforced"
+
+  tags = {
+    Project = "StaticWebsiteHosting"
+    Owner   = "Kavya"
   }
 
   website {
@@ -15,30 +17,32 @@ resource "aws_s3_bucket" "static_website" {
     error_document = "index.html"
   }
 
-  tags = {
-    Project = "StaticWebsiteHosting"
-    Owner   = "Kavya"
+  versioning {
+    enabled = true
   }
 }
 
 resource "aws_s3_bucket_public_access_block" "allow_public_access" {
-  bucket = aws_s3_bucket.static_website.id
-
-  block_public_acls   = false
-  block_public_policy = false
-  ignore_public_acls  = false
+  bucket                  = aws_s3_bucket.static_website.id
+  block_public_acls       = false
+  ignore_public_acls      = false
+  block_public_policy     = false
   restrict_public_buckets = false
 }
 
 resource "aws_s3_bucket_policy" "public_access" {
   bucket = aws_s3_bucket.static_website.id
+
   policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [{
-      Effect    = "Allow",
-      Principal = "*",
-      Action    = "s3:GetObject",
-      Resource  = "${aws_s3_bucket.static_website.arn}/*"
-    }]
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid       = "PublicReadGetObject"
+        Effect    = "Allow"
+        Principal = "*"
+        Action    = "s3:GetObject"
+        Resource  = "${aws_s3_bucket.static_website.arn}/*"
+      }
+    ]
   })
 }
