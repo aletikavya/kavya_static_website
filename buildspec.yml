@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo "Starting build..."
+      - echo "No build steps required for static HTML, directly zipping files."
+  post_build:
+    commands:
+      - echo "Build complete. Preparing artifacts for deployment."
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: './website'
+  discard-paths: yes
+  name: website_artifact
