@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "static_website" {
-  bucket = "kavya-static-website-9908"
+  bucket = "kavya-static-website-2378"
 
   # object_ownership = "BucketOwnerEnforced"
 
